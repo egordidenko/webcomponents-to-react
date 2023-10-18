@@ -2,8 +2,10 @@ import ReactDOM from 'react-dom/client';
 
 import { UserCardReact, TProps } from '../../components/UserCardReact';
 
-export const renderEl = (elOfNode: HTMLElement | null, props: TProps) => {
-  if (elOfNode === null) return;
+const USER_CARD_BY_ID = 'user-card-root';
 
-  ReactDOM.createRoot(elOfNode).render(<UserCardReact {...props} />);
+const userCardRoot = ReactDOM.createRoot(document.getElementById(USER_CARD_BY_ID));
+
+export const renderEl = (props: TProps) => {
+  userCardRoot.render(<UserCardReact {...props} />);
 };

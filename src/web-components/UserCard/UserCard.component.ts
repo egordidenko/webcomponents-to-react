@@ -3,15 +3,11 @@ import { renderEl } from './renderEl.tsx';
 
 
 export class UserCard extends HTMLElement {
-  // @ts-ignore
-  private _mountElOfDOM: HTMLElement | null;
-
   constructor() {
     super();
   }
 
   connectedCallback() {
-    this._mountElOfDOM = document.getElementById('user-card-root');
     this.render();
   }
 
@@ -27,7 +23,7 @@ export class UserCard extends HTMLElement {
     const user = this.getAttribute('data-user');
     const props = toJSONParse(user);
 
-    renderEl(this._mountElOfDOM, props);
+    renderEl(props);
   }
 }
 

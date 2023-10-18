@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getUsers } from '../api/users.ts';
 import { getFullName } from '../utils/getFullName.ts';
+import { isObjectEmpty } from '../utils/isObjectEmpty.ts';
+import { EHttpStatus } from '../constans/http.status.ts';
 
 export type TUserRest = {
   id: number;
@@ -23,13 +25,14 @@ export const useQueryUsers = (addUser: (user: TUser) => void) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    async function fetchUsers() {
+      setLoading(true);
+      const result = await getUsers();
+      const response = await result.json();
 
-    getUsers()
-      .then((response) => response.json())
-      .then((actualData) => {
-        setUsers(actualData?.data);
-        const [person] = actualData?.data as TUserRest[];
+      if (result.status === EHttpStatus.SUCCESS && !isObjectEmpty(response)) {
+        setUsers(response?.data);
+        const [person] = response?.data as TUserRest[];
 
         addUser({
           id: person.id,
@@ -37,16 +40,21 @@ export const useQueryUsers = (addUser: (user: TUser) => void) => {
           avatarURL: person.avatar,
           age: 19,
         });
-      })
+
+      }
+    }
+
+    fetchUsers()
       .finally(() => {
-        setLoading(false);
-      });
+          setLoading(false);
+        },
+      );
+
 
   }, []);
 
   return {
     loading,
     users,
-    countUsers: users.length,
   };
 };

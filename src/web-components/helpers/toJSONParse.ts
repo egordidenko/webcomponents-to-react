@@ -1,9 +1,9 @@
 const toJSONParse = (obj: string | undefined | null) => {
-    if (obj) {
-        return JSON.parse(obj)
-    }
+  if (obj) {
+    return JSON.parse(obj);
+  }
 
-    return {}
-}
+  return {};
+};
 
-export {toJSONParse}
+export { toJSONParse };
