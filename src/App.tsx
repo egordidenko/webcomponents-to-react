@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
 import './App.css';
-import './components/web-components/UserCard';
+import './web-components/UserCard';
 import { TUser, TOTAL_USERS, useQueryUsers } from './hooks/useQueryUsers';
+import { getFullName } from './utils/getFullName.ts';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'user-card': React.DetailedHTMLProps<
@@ -17,12 +19,13 @@ declare global {
 
 
 function App() {
-  const [user, setUser] = useState<TUser & { firstName?: string } | undefined>();
+  const [user, setUser] = useState<TUser>();
 
   const { loading, users } = useQueryUsers(setUser);
 
   const onChangeUser = () => {
-    const { id } = user ?? {};
+    // @ts-ignore
+    const { id } = user;
     const person = users?.[id];
 
     /* Сделал такое вычесление, так как со стороны mock fetch api, нет поля age */
@@ -31,8 +34,8 @@ function App() {
     setUser({
       age,
       id: person.id,
-      firstName: person.first_name,
-      avatar: person.avatar,
+      fullName: getFullName(person.first_name, person.last_name),
+      avatarURL: person.avatar,
     });
   };
 

@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
 import { getUsers } from '../api/users.ts';
+import { getFullName } from '../utils/getFullName.ts';
 
-export type TUser = {
-  avatar?: string;
-  email?: string;
-  first_name?: string;
+export type TUserRest = {
   id: number;
-  last_name?: string;
-  age?: number
+  avatar: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
+
+export type TUser = Pick<TUserRest, 'id'> & {
+  fullName: string
+  age: string | number
+  avatarURL: string
 }
 
 export const TOTAL_USERS = 6;
 
 export const useQueryUsers = (addUser: (user: TUser) => void) => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<TUserRest[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -23,12 +29,12 @@ export const useQueryUsers = (addUser: (user: TUser) => void) => {
       .then((response) => response.json())
       .then((actualData) => {
         setUsers(actualData?.data);
-        const [person] = actualData?.data as TUser[];
+        const [person] = actualData?.data as TUserRest[];
 
         addUser({
           id: person.id,
-          first_name: person.first_name,
-          avatar: person.avatar,
+          fullName: getFullName(person.first_name, person.last_name),
+          avatarURL: person.avatar,
           age: 19,
         });
       })

@@ -1,0 +1,33 @@
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.userCard {
+    display: block;
+    width: 280px;
+}
+
+.userCard__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+}
+
+.userCard__imageWrapper {
+    width: 180px;
+    height: 180px;
+}
+
+.userCard__image {
+    border-radius: 50%;
+}
+
+.userCard__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
