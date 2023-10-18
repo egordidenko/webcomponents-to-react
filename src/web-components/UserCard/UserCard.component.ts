@@ -3,6 +3,7 @@ import { renderEl } from './renderEl.tsx';
 
 
 export class UserCard extends HTMLElement {
+  // @ts-ignore
   private _mountElOfDOM: HTMLElement | null;
 
   constructor() {
