@@ -1,9 +1,10 @@
 // @ts-ignore
 import React, { FC } from 'react';
-import './UserCard.styled.css';
 
 export type TProps = {
-  fullName: string, age: string | number, avatarURL: string
+  fullName: string;
+  age: string | number;
+  avatarURL: string;
 }
 export const UserCardReact: FC<TProps> = ({ fullName, age, avatarURL }) => {
   return <div className='userCard__wrapper'>

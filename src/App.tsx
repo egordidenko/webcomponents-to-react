@@ -39,7 +39,6 @@ function App() {
     });
   };
 
-
   return (
     <>
 
@@ -49,7 +48,9 @@ function App() {
 
       {
         loading ? <h5>Loading ... </h5> : <user-card
-          data-user={JSON.stringify(user)}
+          data-name={user?.fullName}
+          data-age={user?.age}
+          data-avatar-url={user?.avatarURL}
         />
       }
 

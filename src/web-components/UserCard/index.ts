@@ -1,1 +1,1 @@
-export { UserCard } from './UserCard.component.ts'
+export { UserCard } from './UserCard.component.tsx'
